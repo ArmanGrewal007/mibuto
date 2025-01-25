@@ -1,0 +1,48 @@
+.custom-container {
+    background: #9db2bf;
+    /* width: (200px, 30vw); */
+    width: 33.33vw;
+    min-height: 100%;
+    margin-top: 50px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 950px) {
+    .custom-container {
+        width: 80vw; /* For small screens, use 90% of the viewport width */
+    }
+}
+
+/* Text, Email, Password validation */
+form input,
+form button {
+    border: 1px solid #71717188;
+    transition: background-image 0.5s, opacity .5s, border .5s;
+    border-width: 3px; /* Quick dirty fix so that we get red and green borders */
+}
+
+input:invalid:not(:placeholder-shown),
+#email.email-invalid,
+#confirmPassword.passwords-mismatch {
+    border-color: red;
+    background-image: url(@/assets/checked_red.png);
+}
+
+input:valid:not(:placeholder-shown),
+#email.email-valid,
+#confirmPassword.passwords-match {
+    border-color: green;
+    background-image: url(@/assets/checked_green.png);
+}
+
+input:invalid:not(:placeholder-shown),
+input:valid:not(:placeholder-shown),
+#email.email-valid,
+#email.email-invalid,
+#confirmPassword.passwords-match,
+#confirmPassword.passwords-mismatch {
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px);
+}
