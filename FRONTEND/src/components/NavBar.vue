@@ -115,7 +115,7 @@
         <!-- Brand Logo -->
         <div class="navbar-brand d-flex align-items-center">
           <router-link to="/home" class="d-flex align-items-center text-decoration-none nav-link">
-            <img src="../../public/mibuto.webp" alt="mibuto logo" style="height: 47px; margin-right: 8px;" />
+            <img src="../../public/mibuto.webp" alt="mibuto logo" title="home" class="logo"/>
           </router-link>
         </div>
 
@@ -258,5 +258,14 @@ export default {
 /* User info section */
 .user-info {
   background-color: #f8f9fa;
+}
+
+.logo {
+  height: 47px; 
+  margin-right: 8px;
+}
+.nav-link:hover .logo {
+  filter: invert(1) brightness(2);
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 </style>
