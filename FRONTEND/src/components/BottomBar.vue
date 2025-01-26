@@ -8,10 +8,10 @@
       <div class="container p-4">
         <!-- Section: Links -->
         <section class="d-flex justify-content-between align-items-center">
-          <!-- Mibuto Icon -->
+          <!-- saitousphere Icon -->
           <div class="d-flex align-items-center gap-2">
             <router-link to="/home" class="nav-link">
-              <img src="/mibuto-light.webp" alt="mibuto" class="logo" title="home" />
+              <img src="/saitousphere.webp" alt="saitousphere" class="logo" title="home" />
             </router-link>
           </div>
 
@@ -52,7 +52,7 @@
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); border-top: 1px solid #6E747D;">
         © 2025 Copyright:
         <a class="link-body-emphasis text-white text-decoration-underline"
-          href="https://github.com/ArmanGrewal007/mibuto/blob/main/LICENSE" target="_blank">ArmanGrewal007</a>
+          href="https://github.com/ArmanGrewal007/saitousphere/blob/main/LICENSE" target="_blank">ArmanGrewal007</a>
       </div>
       <!-- Copyright -->
     </footer>
@@ -81,9 +81,10 @@ export default {
 }
 .logo {
   object-fit: contain;
+  filter: brightness(0) saturate(100%);
 }
 .nav-link:hover .logo {
-  filter: brightness(0) saturate(100%);
+  filter: invert(1) brightness(0.1);
   opacity: 1;
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
