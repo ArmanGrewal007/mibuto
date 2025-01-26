@@ -115,7 +115,7 @@
         <!-- Brand Logo -->
         <div class="navbar-brand d-flex align-items-center">
           <router-link to="/home" class="d-flex align-items-center text-decoration-none nav-link">
-            <img src="../../public/saitousphere.webp" alt="saitousphere logo" title="home" class="logo"/>
+            <img src="../../public/mibuto.webp" alt="mibuto logo" title="home" class="logo"/>
           </router-link>
         </div>
 
@@ -261,12 +261,11 @@ export default {
 }
 
 .logo {
-  height: 59px; 
+  height: 47px; 
   margin-right: 8px;
-  filter: brightness(0) saturate(100%);
 }
 .nav-link:hover .logo {
-  filter: invert(1) brightness(0.2);
+  filter: invert(1) brightness(2);
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 </style>

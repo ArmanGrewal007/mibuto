@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "saitousphere"
+name = "mibuto"
 version = "0.1.0"
-description = "Flask backend for saitousphere"
+description = "Flask backend for mibuto"
 authors = ["ArmanGrewal007 <armansinghgrewal@gmail.com>"]
 license = "MIT"
 readme = "README.md"
