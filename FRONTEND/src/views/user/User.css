@@ -22,15 +22,14 @@ form button {
     border-width: 3px; /* Quick dirty fix so that we get red and green borders */
 }
 
-input:invalid:not(:placeholder-shown),
+input:not(#dob):invalid:not(:placeholder-shown),
 #email.email-invalid,
 #confirmPassword.passwords-mismatch {
     border-color: red;
     background-image: url(@/assets/checked_red.png);
 }
 
-input:valid:not(:placeholder-shown),
-#email.email-valid,
+input:not(#dob):valid:not(:placeholder-shown),
 #confirmPassword.passwords-match {
     border-color: green;
     background-image: url(@/assets/checked_green.png);
@@ -38,8 +37,6 @@ input:valid:not(:placeholder-shown),
 
 input:invalid:not(:placeholder-shown),
 input:valid:not(:placeholder-shown),
-#email.email-valid,
-#email.email-invalid,
 #confirmPassword.passwords-match,
 #confirmPassword.passwords-mismatch {
     background-size: 20px;

@@ -6,7 +6,6 @@ export const user_auth = {
   state: {
     user: null,
     username: '',
-    user_email: '',
     isAdmin: false
   },
 
@@ -17,7 +16,8 @@ export const user_auth = {
       state.isAdmin = loggedInAsAdmin && userData.user?.roles.includes('Admin');
       
       localStorage.setItem('username', JSON.stringify(userData.user?.username));
-      localStorage.setItem('user_email', JSON.stringify(userData.user?.email));
+      localStorage.setItem('full_name', JSON.stringify(userData.user?.full_name));
+      localStorage.setItem('qualification', JSON.stringify(userData.user?.qualification));
       localStorage.setItem('isAdmin', JSON.stringify(state.isAdmin));
       localStorage.setItem('token', userData.token);
       EventService.addtoken();
@@ -27,10 +27,10 @@ export const user_auth = {
       state.user = null;
       state.isAdmin = false;
       state.username = '';
-      state.user_email = '';
       
       localStorage.removeItem('username');
-      localStorage.removeItem('user_email');
+      localStorage.removeItem('full_name');
+      localStorage.removeItem('qualification');
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       localStorage.removeItem('isAdmin');
@@ -83,6 +83,7 @@ export const user_auth = {
     isLoggedIn: state => !!state.user || state.isAdmin,
     isAdmin: state => state.isAdmin,
     username: state => state.user?.username || '',
-    userEmail: state => state.user?.email || ''
+    fullName: state => state.user?.full_name || '',
+    qualification: state => state.user?.qualification || ''
   }
 };

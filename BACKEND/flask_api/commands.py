@@ -6,15 +6,17 @@ from .extensions import user_datastore
 from .models import db
 from flask_security.utils import hash_password
 from faker import Faker
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 ################ Creating admin user ################
 @click.command('create-admin')
 @click.argument('username')
-@click.argument('email')
 @click.argument('password')
+@click.argument('full_name')
+@click.argument('qualification')
+@click.argument('dob')
 @with_appcontext
-def create_admin(username, email, password):
+def create_admin(username, password, full_name, qualification, dob):
     """
     Create an admin user. 
     """
@@ -41,10 +43,11 @@ def create_admin(username, email, password):
         hashed_password = hash_password(password)
         admin_user = user_datastore.create_user(
             username=username,
-            email=email,
             password=hashed_password,
+            full_name=full_name,
+            qualification=qualification,
+            dob=date.fromisoformat(dob),
             active=True,
-            fs_uniquifier=email,
             roles=[admin_role, user_role]  # Assign roles directly during creation
         )
         
