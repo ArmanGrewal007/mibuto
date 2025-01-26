@@ -6,6 +6,8 @@ skinparam class {
   BorderColor #666666
 }
 
+left to right direction
+
 class Users {
   + id: Integer <<PK>>
   --
@@ -75,6 +77,15 @@ class Scores {
   timestamp : Datetime
 }
 
+' Junction Tables
+class users_roles <<junction>> {
+    user_id: Integer <<FK>>
+    role_id: Integer <<FK>>
+}
+
+' Relationships
+Users "1" *-- "*" users_roles
+Roles "1" *-- "*" users_roles
 Users "1" -- "*" Scores
 Users "1" -- "*" Subjects
 Subjects "1" -- "*" Chapters
