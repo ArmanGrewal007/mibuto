@@ -12,5 +12,5 @@
 
 
 <div align="center">
-    <img src="./schema.png" />
+    <img src="./schema.svg" />
 </div>

@@ -1,66 +1,78 @@
 @startuml mibuto
-skinparam classAttributeIconSize 0
+
+skinparam class {
+  BackgroundColor White
+  ArrowColor #666666
+  BorderColor #666666
+}
 
 class Users {
-  + id : int
-  + username : string
-  + password : string
-  + full_name : string
-  + qualification : string
-  + dob : date
-  + active : boolean
+  + id: Integer <<PK>>
+  --
+  username : String
+  password : String
+  full_name : String
+  qualification : String
+  dob : Date
+  active : Boolean
 }
 
 class Roles {
-  + id : int
-  + name : string
-  + description : string
+  + id: Integer <<PK>>
+  --
+  name : String
+  description : String
 }
 
 class Subjects {
-  + id : int
-  + name : string
-  + description : text
-  + created_by : int
-  + created_at : datetime
+  + id: Integer <<PK>>
+  --
+  name : String
+  description : Text
+  created_by : Integer
+  created_at : Datetime
 }
 
 class Chapters {
-  + id : int
-  + name : string
-  + description : text
-  + subject_id : int
-  + created_at : datetime
+  + id: Integer <<PK>>
+  --
+  name : String
+  description : Text
+  subject_id : Integer
+  created_at : Datetime
 }
 
 class Quizzes {
-  + id : int
-  + title : string
-  + chapter_id : int
-  + date_of_quiz : datetime
-  + time_duration : int
-  + remarks : text
-  + created_at : datetime
+  + id: Integer <<PK>>
+  --
+  title : String
+  chapter_id : Integer
+  date_of_quiz : Datetime
+  time_duration : Integer
+  remarks : Text
+  created_at : Datetime
 }
 
 class Questions {
-  + id : int
-  + quiz_id : int
-  + question_statement : text
-  + option1 : string
-  + option2 : string
-  + option3 : string
-  + option4 : string
-  + correct_option : int
+  + id: Integer <<PK>>
+  --
+  quiz_id : Integer
+  question_statement : Text
+  option1 : String
+  option2 : String
+  option3 : String
+  option4 : String
+  correct_option : Integer
 }
 
 class Scores {
-  + id : int
-  + user_id : int
-  + quiz_id : int
-  + score : int
-  + total_questions : int
-  + timestamp : datetime
+  + id: Integer <<PK>>
+  --
+  user_id : Integer
+  quiz_id : Integer
+  score : Integer
+  total_questions : Integer
+  timestamp : Datetime
 }
 
 Users "1" -- "*" Scores
