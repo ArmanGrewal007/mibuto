@@ -1,0 +1,73 @@
+@startuml mibuto
+skinparam classAttributeIconSize 0
+
+class Users {
+  + id : int
+  + username : string
+  + password : string
+  + full_name : string
+  + qualification : string
+  + dob : date
+  + active : boolean
+}
+
+class Roles {
+  + id : int
+  + name : string
+  + description : string
+}
+
+class Subjects {
+  + id : int
+  + name : string
+  + description : text
+  + created_by : int
+  + created_at : datetime
+}
+
+class Chapters {
+  + id : int
+  + name : string
+  + description : text
+  + subject_id : int
+  + created_at : datetime
+}
+
+class Quizzes {
+  + id : int
+  + title : string
+  + chapter_id : int
+  + date_of_quiz : datetime
+  + time_duration : int
+  + remarks : text
+  + created_at : datetime
+}
+
+class Questions {
+  + id : int
+  + quiz_id : int
+  + question_statement : text
+  + option1 : string
+  + option2 : string
+  + option3 : string
+  + option4 : string
+  + correct_option : int
+}
+
+class Scores {
+  + id : int
+  + user_id : int
+  + quiz_id : int
+  + score : int
+  + total_questions : int
+  + timestamp : datetime
+}
+
+Users "1" -- "*" Scores
+Users "1" -- "*" Subjects
+Subjects "1" -- "*" Chapters
+Chapters "1" -- "*" Quizzes
+Quizzes "1" -- "*" Questions
+Quizzes "1" -- "*" Scores
+
+@enduml
