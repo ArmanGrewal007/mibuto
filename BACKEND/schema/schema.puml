@@ -31,7 +31,6 @@ class Subjects {
   --
   name : String
   description : Text
-  created_by : Integer
   created_at : Datetime
 }
 

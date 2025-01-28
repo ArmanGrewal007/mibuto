@@ -44,6 +44,15 @@ class Subjects(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     chapters = db.relationship('Chapters', backref='subject', lazy=True, cascade='all, delete-orphan')
+    def to_dict(self):
+      return {
+          "id": self.id,
+          "name": self.name,
+          "description": self.description,
+          "created_by": self.created_by,
+          "created_at": self.created_at,
+          "chapters": [chapter.to_dict() for chapter in self.chapters]
+      }
 
 class Chapters(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +61,15 @@ class Chapters(db.Model):
     subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     quizzes = db.relationship('Quizzes', backref='chapter', lazy=True, cascade='all, delete-orphan')
+    def to_dict(self):
+      return {
+          "id": self.id,
+          "name": self.name,
+          "description": self.description,
+          "subject_id": self.subject_id,
+          "created_at": self.created_at,
+          "quizzes": [quiz.to_dict() for quiz in self.quizzes]
+      }
 
 class Quizzes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,6 +81,17 @@ class Quizzes(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     questions = db.relationship('Questions', backref='quiz', lazy=True, cascade='all, delete-orphan')
     scores = db.relationship('Scores', backref='quiz', lazy=True)
+    def to_dict(self):
+      return {
+          "id": self.id,
+          "title": self.title,
+          "chapter_id": self.chapter_id,
+          "date_of_quiz": self.date_of_quiz,
+          "time_duration": self.time_duration,
+          "remarks": self.remarks,
+          "created_at": self.created_at,
+          "questions": [question.to_dict() for question in self.questions]
+      }
 
 class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,3 +102,14 @@ class Questions(db.Model):
     option3 = db.Column(db.String(255), nullable=False)
     option4 = db.Column(db.String(255), nullable=False)
     correct_option = db.Column(db.Integer, nullable=False)
+    def to_dict(self):
+      return {
+          "id": self.id,
+          "quiz_id": self.quiz_id,
+          "question_statement": self.question_statement,
+          "option1": self.option1,
+          "option2": self.option2,
+          "option3": self.option3,
+          "option4": self.option4,
+          "correct_option": self.correct_option
+      }

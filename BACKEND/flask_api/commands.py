@@ -2,8 +2,8 @@ import click
 import random
 import requests
 from flask.cli import with_appcontext
-from .extensions import user_datastore
-from .models import db
+from flask_api.extensions import user_datastore
+from flask_api.models import db
 from flask_security.utils import hash_password
 from faker import Faker
 from datetime import date, datetime, timedelta
@@ -57,3 +57,6 @@ def create_admin(username, password, full_name, qualification, dob):
     except Exception as e:
         db.session.rollback()
         click.echo(f'Error: {str(e)}')
+
+################ Creating dummy data ################
+fake = Faker('en_IN') # Indian locale
