@@ -60,7 +60,7 @@ export default {
         .then(() => {
           this.$refs.toastComponent.addToast("success", "Welcome admin!");
           setTimeout(() => {
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: "admin-dashboard" });
           }, 1000);
         })
         .catch((error) => {

@@ -1,7 +1,17 @@
+<!-- NavBar.vue -->
 <template>
   <div>
-    <ToastNotification ref="toastComponent" />
+    <!-- Modals -->
+    <CreateSubjectModal v-if="createSubjectModal" @close="createSubjectModal = false" @submit="handleCreateSubject" />
+    <UpdateSubjectModal v-if="updateSubjectModal" @close="updateSubjectModal = false" @update="handleUpdateSubject" />
+    <DeleteSubjectModal v-if="deleteSubjectModal" @close="deleteSubjectModal = false" @delete="handleDeleteSubject" />
+    <CreateChapterModal v-if="createChapterModal" @close="createChapterModal = false" @submit="handleCreateChapter" />
+    <UpdateChapterModal v-if="updateChapterModal" @close="updateChapterModal = false" @update="handleUpdateChapter" />
+    <DeleteChapterModal v-if="deleteChapterModal" @close="deleteChapterModal = false" @delete="handleDeleteChapter" />
+    <CreateQuizModal v-if="createQuizModal" @close="createQuizModal = false" @submit="handleCreateQuiz" />
 
+    <!-- Toast Notifications -->
+    <ToastNotification ref="toastComponent" />
     <!-- Sidebar -->
     <div class="sidebar" :class="{ 'sidebar-open': isSidebarOpen }">
       <!-- <div class="sidebar-header">
@@ -24,62 +34,62 @@
                 <i class="fas fa-dashboard"></i> Admin Dashboard
               </router-link>
 
-              <!-- Show Management Section -->
+              <!-- Subject Management Section -->
               <div class="sidebar-section">
-                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleShowManagement">
-                  <small class="text-muted text-uppercase fw-bold">Show Management </small>
-                  <i :class="['fas', showShowManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleSubjectManagement">
+                  <small class="text-muted text-uppercase fw-bold">Subject Management </small>
+                  <i :class="['fas', showSubjectManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
                   <!-- Toggle icon -->
                 </div>
-                <div v-if="showShowManagement"> <!-- Show buttons only if showShowManagement is true -->
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('createShow')">
-                    <i class="fas fa-plus-circle"></i> Create Show
+                <div v-if="showSubjectManagement"> <!-- Show buttons only if showSubjectManagement is true -->
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('createSubject')">
+                    <i class="fas fa-plus-circle"></i> Create Subject
                   </a>
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('updateShow')">
-                    <i class="fas fa-edit"></i> Update Show
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('updateSubject')">
+                    <i class="fas fa-edit"></i> Update Subject
                   </a>
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('deleteShow')">
-                    <i class="fas fa-trash"></i> Delete Show
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('deleteSubject')">
+                    <i class="fas fa-trash"></i> Delete Subject
                   </a>
                 </div>
               </div>
 
-              <!-- Theater Management Section -->
+              <!-- Chapter Management Section -->
               <div class="sidebar-section">
-                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleTheaterManagement">
-                  <small class="text-muted text-uppercase fw-bold">Theater Management </small>
-                  <i :class="['fas', showTheaterManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleChapterManagement">
+                  <small class="text-muted text-uppercase fw-bold">Chapter Management </small>
+                  <i :class="['fas', showChapterManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
                   <!-- Toggle icon -->
                 </div>
-                <div v-if="showTheaterManagement"> <!-- Theater buttons only if showTheaterManagement is true -->
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('createTheater')">
-                    <i class="fas fa-plus-circle"></i> Create Theater
+                <div v-if="showChapterManagement"> <!-- Chapter buttons only if showChapterManagement is true -->
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('createChapter')">
+                    <i class="fas fa-plus-circle"></i> Create Chapter
                   </a>
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('updateTheater')">
-                    <i class="fas fa-edit"></i> Update Theater
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('updateChapter')">
+                    <i class="fas fa-edit"></i> Update Chapter
                   </a>
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('deleteTheater')">
-                    <i class="fas fa-trash"></i> Delete Theater
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('deleteChapter')">
+                    <i class="fas fa-trash"></i> Delete Chapter
                   </a>
                 </div>
               </div>
 
-              <!-- Schedule Management Section -->
+              <!-- Quiz Management Section -->
               <div class="sidebar-section">
-                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleScheduleManagement">
-                  <small class="text-muted text-uppercase fw-bold">Schedule Management </small>
-                  <i :class="['fas', showScheduleManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+                <div class="sidebar-section-title px-3 py-2 bg-light" @click="toggleQuizManagement">
+                  <small class="text-muted text-uppercase fw-bold">Quiz Management </small>
+                  <i :class="['fas', showQuizManagement ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
                   <!-- Toggle icon -->
                 </div>
-                <div v-if="showScheduleManagement"> <!-- Schedule buttons only if showScheduleManagement is true -->
-                  <a href="#" class="sidebar-item" @click.prevent="openModal('createSchedule')">
-                    <i class="fas fa-plus-circle"></i> Create Schedule
+                <div v-if="showQuizManagement"> <!-- Quiz buttons only if showQuizManagement is true -->
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('createQuiz')">
+                    <i class="fas fa-plus-circle"></i> Create Quiz
                   </a>
                   <a href="#" class="sidebar-item disabled" @click.prevent>
-                    <i class="fas fa-edit"></i> Update Schedule
+                    <i class="fas fa-edit"></i> Update Quiz
                   </a>
                   <a href="#" class="sidebar-item disabled" @click.prevent>
-                    <i class="fas fa-trash"></i> Delete Schedule
+                    <i class="fas fa-trash"></i> Delete Quiz
                   </a>
                 </div>
               </div>
@@ -115,7 +125,7 @@
         <!-- Brand Logo -->
         <div class="navbar-brand d-flex align-items-center">
           <router-link to="/home" class="d-flex align-items-center text-decoration-none nav-link">
-            <img src="../../public/mibuto.webp" alt="mibuto logo" title="home" class="logo"/>
+            <img src="../../public/mibuto.webp" alt="ticpic logo" style="height: 47px; margin-right: 8px;" />
           </router-link>
         </div>
 
@@ -127,24 +137,41 @@
     </nav>
 
     <!-- Overlay -->
-    <div class="sidebar-overlay" :class="{ 'overlay-visible': isSidebarOpen }" @click="toggleSidebar" />
+    <div class="sidebar-overlay" :class="{ 'overlay-visible': isSidebarOpen }" @click="toggleSidebar">
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import CreateSubjectModal from "@/components/modals/CreateSubjectModal.vue";
 import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
-  name: 'NavBar',
+  name: "NavBar",
   components: {
+    CreateSubjectModal,
     ToastNotification
   },
   data() {
     return {
       isSidebarOpen: false,
+      showSubjectManagement: false, createSubjectModal: false, updateSubjectModal: false, deleteSubjectModal: false,
+      showChapterManagement: false, createChapterModal: false, updateChapterModal: false, deleteChapterModal: false,
+      showQuizManagement: false, createQuizModal: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "user_auth/isLoggedIn",
+      username: "user_auth/username",
+      isAdmin: "user_auth/isAdmin",
+    }),
+  },
   methods: {
+    ...mapActions({
+      clearSession: "user_auth/logout",
+    }),
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
       if (this.isSidebarOpen) {
@@ -153,8 +180,143 @@ export default {
         document.body.style.overflow = 'auto';
       }
     },
-  }
-}
+    toggleSubjectManagement() { this.showSubjectManagement = !this.showSubjectManagement; },
+    toggleChapterManagement() { this.showChapterManagement = !this.showChapterManagement; },
+    toggleQuizManagement() { this.showQuizManagement = !this.showQuizManagement; },
+    logout() {
+      this.clearSession();
+      this.toggleSidebar();
+    },
+    openModal(type) {
+      switch (type) {
+        case 'createSubject': this.createSubjectModal = true; break;
+        case 'updateSubject': this.updateSubjectModal = true; break;
+        case 'deleteSubject': this.deleteSubjectModal = true; break;
+        case 'createChapter': this.createChapterModal = true; break;
+        case 'updateChapter': this.updateChapterModal = true; break;
+        case 'deleteChapter': this.deleteChapterModal = true; break;
+        case 'createQuiz': this.createQuizModal = true; break;
+      }
+      this.toggleSidebar();
+    },
+    async handleCreateSubject(data) {
+      try {
+        const response = await this.$store.dispatch('shows/createSubject', data);
+        // if (this.$route.name === 'home') {
+        //   this.$store.dispatch('shows/fetchSubjects'); // Refresh shows only on HomePage
+        // }
+        this.createSubjectModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleUpdateSubject(data) {
+      try {
+        const response = await this.$store.dispatch('shows/updateSubject', data);
+        this.updateSubjectModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleDeleteSubject(showId) {
+      try {
+        const response = await this.$store.dispatch('shows/deleteSubject', showId);
+        this.deleteSubjectModal = false;
+        console.log(response);
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleCreateChapter(data) {
+      try {
+        const response = await this.$store.dispatch('theaters/createChapter', data);
+        // Need to do something else here
+        // if (this.$route.name === 'home') { 
+        //   console(this.selectedCity);
+        //   this.$store.dispatch('theaters/fetchChapters', this.selectedCity); // Refresh theaters only on HomePage
+        // }
+        this.createChapterModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleUpdateChapter(data){
+      try {
+        const response = await this.$store.dispatch('theaters/updateChapter', data);
+        console.log("response: ", response);
+        this.updateChapterModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleDeleteChapter(data){
+      try {
+        const response = await this.$store.dispatch('theaters/deleteChapter', data);
+        console.log("response: ", response);
+        this.deleteChapterModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    },
+    async handleCreateQuiz(data) {
+      try {
+        const response = await this.$store.dispatch('schedules/createQuiz', data);
+        this.createQuizModal = false;
+        const message = response?.msg || response?.message || 'Action was done';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('success', message);
+        }
+      } catch (error) {
+        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
+        if (this.$refs.toastComponent) {
+          this.$refs.toastComponent.addToast('error', message);
+        }
+      }
+    }
+  },
+};
 </script>
 
 <style>
