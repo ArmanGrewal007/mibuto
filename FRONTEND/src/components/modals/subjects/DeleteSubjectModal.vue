@@ -21,7 +21,8 @@
 
           <div v-if="selectedSubjectId" class="alert alert-warning" role="alert">
             Are you sure you want to delete the subject: <strong><u>{{ selectedSubject?.name }}</u></strong>?<br>
-            This action is irreversible and will delete all associated chapters, and any quizzes contained within those chapters.
+            This action is irreversible and will delete all associated chapters, and any quizzes contained within those
+            chapters.
           </div>
         </div>
 
@@ -50,9 +51,9 @@ export default {
     const store = useStore();
     const selectedSubjectId = ref('');
     const subjects = computed(() => store.getters['subjects/getSubjects']);
-    
+
     // Find the selected subject object
-    const selectedSubject = computed(() => 
+    const selectedSubject = computed(() =>
       subjects.value.find(subject => subject.id === selectedSubjectId.value)
     );
 
@@ -69,7 +70,7 @@ export default {
     return {
       subjects,
       selectedSubjectId,
-      selectedSubject, 
+      selectedSubject,
       handleDelete
     };
   }

@@ -79,9 +79,11 @@ export default {
   transform: scale(1.16);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .logo {
   object-fit: contain;
 }
+
 .nav-link:hover .logo {
   filter: brightness(0) saturate(100%);
   opacity: 1;

@@ -8,15 +8,15 @@ export const chapters = {
     chaptersBySubject: {},  // Organize chapters by subject_id for efficient lookup
   },
   mutations: {
-    SET_CHAPTERS(state, chapters) {  state.chapters = chapters; },
-    SET_SELECTED_CHAPTER(state, chapter) {  state.selectedChapter = chapter;},
+    SET_CHAPTERS(state, chapters) { state.chapters = chapters; },
+    SET_SELECTED_CHAPTER(state, chapter) { state.selectedChapter = chapter; },
     SET_CHAPTERS_BY_SUBJECT(state, { subjectId, chapters }) {
       state.chaptersBySubject = {
         ...state.chaptersBySubject,
         [subjectId]: chapters
       };
     },
-    ADD_CHAPTER(state, chapter) { 
+    ADD_CHAPTER(state, chapter) {
       state.chapters.push(chapter);
       // Update chapters by subject
       const subjectChapters = state.chaptersBySubject[chapter.subject_id] || [];
@@ -25,10 +25,10 @@ export const chapters = {
     UPDATE_CHAPTER(state, updatedChapter) {
       // Update in main chapters array
       const index = state.chapters.findIndex(chapter => chapter.id === updatedChapter.id);
-      if (index !== -1) { 
-        state.chapters.splice(index, 1, updatedChapter); 
+      if (index !== -1) {
+        state.chapters.splice(index, 1, updatedChapter);
       }
-      
+
       // Update in chaptersBySubject
       if (state.chaptersBySubject[updatedChapter.subject_id]) {
         const subjectIndex = state.chaptersBySubject[updatedChapter.subject_id]
@@ -41,13 +41,13 @@ export const chapters = {
     DELETE_CHAPTER(state, { chapterId, subjectId }) {
       // Remove from main chapters array
       state.chapters = state.chapters.filter(chapter => chapter.id !== chapterId);
-      
+
       // Remove from chaptersBySubject
       if (state.chaptersBySubject[subjectId]) {
         state.chaptersBySubject[subjectId] = state.chaptersBySubject[subjectId]
           .filter(chapter => chapter.id !== chapterId);
       }
-      
+
       // Clear selectedChapter if it was deleted
       if (state.selectedChapter && state.selectedChapter.id === chapterId) {
         state.selectedChapter = null;
@@ -67,9 +67,9 @@ export const chapters = {
     },
     async fetchChaptersBySubject({ commit }, subjectId) {
       const response = await EventService.getChaptersBySubject(subjectId);
-      commit('SET_CHAPTERS_BY_SUBJECT', { 
-        subjectId, 
-        chapters: response.data.data 
+      commit('SET_CHAPTERS_BY_SUBJECT', {
+        subjectId,
+        chapters: response.data.data
       });
       return response.data;
     },
@@ -98,8 +98,8 @@ export const chapters = {
       .sort((a, b) => a.name.localeCompare(b.name)),
     getSelectedChapter: (state) => state.selectedChapter,
     getChapterById: (state) => (id) => state.chapters.find(chapter => chapter.id === id),
-    getChaptersBySubjectId: (state) => (subjectId) => 
-      state.chaptersBySubject[subjectId] 
+    getChaptersBySubjectId: (state) => (subjectId) =>
+      state.chaptersBySubject[subjectId]
         ? [...state.chaptersBySubject[subjectId]].sort((a, b) => a.name.localeCompare(b.name))
         : [],
     getChapterCount: (state) => (subjectId) => state.chaptersBySubject[subjectId]?.length || 0,

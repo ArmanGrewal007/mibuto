@@ -2,7 +2,7 @@ import EventService from "@/services/event_services";
 
 export const user_auth = {
   namespaced: true,
-  
+
   state: {
     user: JSON.parse(localStorage.getItem('user')) || null,
     username: localStorage.getItem('username') ? JSON.parse(localStorage.getItem('username')) : '',
@@ -14,7 +14,7 @@ export const user_auth = {
       state.user = userData.user;
       const loggedInAsAdmin = userData.loggedInAsAdmin || false;
       state.isAdmin = loggedInAsAdmin && userData.user?.roles.includes('Admin');
-      
+
       localStorage.setItem('user', JSON.stringify(userData.user));
       localStorage.setItem('username', JSON.stringify(userData.user?.username));
       localStorage.setItem('full_name', JSON.stringify(userData.user?.full_name));
@@ -23,12 +23,12 @@ export const user_auth = {
       localStorage.setItem('token', userData.token);
       EventService.addtoken();
     },
-    
+
     CLEAR_USER_DATA(state) {
       state.user = null;
       state.isAdmin = false;
       state.username = '';
-      
+
       localStorage.removeItem('user');
       localStorage.removeItem('username');
       localStorage.removeItem('full_name');
@@ -37,7 +37,7 @@ export const user_auth = {
       localStorage.removeItem('token');
       localStorage.removeItem('isAdmin');
     },
-    
+
     SET_USER(state, userData) {
       state.user = userData;
     }
@@ -51,7 +51,7 @@ export const user_auth = {
         return response;
       }
     },
-    
+
     async signup({ commit }, credentials) {
       const response = await EventService.postUserSignup(credentials);
       if (response.status < 400) {
@@ -67,11 +67,11 @@ export const user_auth = {
         return response;
       }
     },
-    
+
     logout({ commit }) {
       commit('CLEAR_USER_DATA');
     },
-    
+
     async fetchUser({ commit }, { id }) {
       const response = await EventService.getUser(id);
       if (response.status < 400) {

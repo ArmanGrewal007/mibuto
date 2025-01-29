@@ -80,7 +80,7 @@ export default {
         name: faker.helpers.arrayElement(academicSubjects) + '-' +
           faker.number.int({ min: 100, max: 400 }),
         description: `Study of ${faker.science.chemicalElement().name} and ` +
-                      `${faker.science.unit().name}. `
+          `${faker.science.unit().name}. `
       };
     };
 

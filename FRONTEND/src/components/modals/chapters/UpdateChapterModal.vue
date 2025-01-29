@@ -13,7 +13,8 @@
             <div class="row g-3">
               <!-- Subject Selection -->
               <div class="form-floating col-md-12">
-                <select id="subject-select" v-model="selectedSubjectId" class="form-select" @change="handleSubjectSelect" >
+                <select id="subject-select" v-model="selectedSubjectId" class="form-select"
+                  @change="handleSubjectSelect">
                   <option value="">Select Subject</option>
                   <option v-for="subject in subjects" :key="subject.id" :value="subject.id">
                     {{ subject.name }}
@@ -26,7 +27,8 @@
 
               <!-- Chapter Selection -->
               <div class="form-floating col-md-12">
-                <select id="chapter-select" v-model="selectedChapterId" class="form-select" :disabled="!selectedSubjectId" @change="handleChapterSelect">
+                <select id="chapter-select" v-model="selectedChapterId" class="form-select"
+                  :disabled="!selectedSubjectId" @change="handleChapterSelect">
                   <option value="">Select Chapter</option>
                   <option v-for="chapter in subjectChapters" :key="chapter.id" :value="chapter.id">
                     {{ chapter.name }}
@@ -39,7 +41,8 @@
 
               <!-- Chapter Name -->
               <div class="form-floating col-md-12">
-                <input id="chapter-name" v-model="formData.name" placeholder="" class="form-control" :disabled="!selectedChapterId"/>
+                <input id="chapter-name" v-model="formData.name" placeholder="" class="form-control"
+                  :disabled="!selectedChapterId" />
                 <label for="chapter-name" class="form-label">
                   Name
                   <span class="text-danger">*</span>
@@ -48,7 +51,8 @@
 
               <!-- Description -->
               <div class="form-floating col-md-12">
-                <textarea id="description" v-model="formData.description" placeholder="" class="form-control" :disabled="!selectedChapterId" minlength="10"></textarea>
+                <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
+                  :disabled="!selectedChapterId" minlength="10"></textarea>
                 <label for="description" class="form-label">
                   Description
                   <span class="text-danger">*</span>
@@ -71,7 +75,8 @@
           <button type="button" @click="$emit('close')" class="btn btn-secondary">
             Cancel
           </button>
-          <button type="submit" @click="handleSubmit" class="btn btn-primary" :disabled="!isFormValid || !selectedChapterId">
+          <button type="submit" @click="handleSubmit" class="btn btn-primary"
+            :disabled="!isFormValid || !selectedChapterId">
             Update Chapter
           </button>
         </div>
@@ -102,21 +107,21 @@ export default {
 
     // Get subjects from Vuex store
     const subjects = computed(() => store.getters['subjects/getSubjects']);
-    
+
     // Get chapters for selected subject
-    const subjectChapters = computed(() => 
-      selectedSubjectId.value 
+    const subjectChapters = computed(() =>
+      selectedSubjectId.value
         ? store.getters['chapters/getChaptersBySubjectId'](selectedSubjectId.value)
         : []
     );
 
     const isFormValid = computed(() => {
       return formData.value.name.trim().length >= 3 &&
-              formData.value.description.trim().length >= 5;
+        formData.value.description.trim().length >= 5;
     });
 
     const chapterTypes = [
-      'Introduction to', 'Fundamentals of', 'Advanced', 
+      'Introduction to', 'Fundamentals of', 'Advanced',
       'Basic Concepts in', 'Applications of', 'Principles of'
     ];
 
@@ -129,11 +134,11 @@ export default {
       selectedChapterId.value = '';
       formData.value = { name: '', description: '', subject_id: '' };
       originalData.value = null;
-      
+
       if (selectedSubjectId.value) {
         // Load chapters for selected subject
         await store.dispatch(
-          'chapters/fetchChaptersBySubject', 
+          'chapters/fetchChaptersBySubject',
           selectedSubjectId.value
         );
       }
@@ -156,10 +161,10 @@ export default {
     const randomizeFields = () => {
       formData.value = {
         ...formData.value,
-        name: faker.helpers.arrayElement(chapterTypes) + ' ' + 
-              faker.science.chemicalElement().name,
+        name: faker.helpers.arrayElement(chapterTypes) + ' ' +
+          faker.science.chemicalElement().name,
         description: `This chapter covers ${faker.science.unit().name} and its ` +
-                    `relationship with ${faker.science.unit().symbol}.`
+          `relationship with ${faker.science.unit().symbol}.`
       };
     };
 

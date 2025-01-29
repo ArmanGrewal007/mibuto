@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://localhost:5001', 
+  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://localhost:5001',
   withCredentials: false,
   headers: {
     'Accept': 'application/json',
@@ -29,10 +29,10 @@ export default {
   getSubjects() { return apiClient.get('/get-subject'); },
   getSubjectByID(subjectID) { return apiClient.get(`/get-subject?subject_id=${subjectID}`); },
   updateSubject(subjectID, data) { return apiClient.patch(`/update-subject/${subjectID}`, { ...data }); },
-  deleteSubject(subjectID) { return apiClient.delete(`/delete-subject/${subjectID}`);},  
+  deleteSubject(subjectID) { return apiClient.delete(`/delete-subject/${subjectID}`); },
   // Chapter APIs
-  createChapter(data) {  return apiClient.post('/create-chapter', data) },
-  getChapters() {  return apiClient.get('/get-chapter') },
+  createChapter(data) { return apiClient.post('/create-chapter', data) },
+  getChapters() { return apiClient.get('/get-chapter') },
   getChapterByID(chapterID) { return apiClient.get(`/get-chapter?chapter_id=${chapterID}`) },
   getChaptersBySubject(subjectID) { return apiClient.get(`/get-chapter?subject_id=${subjectID}`) },
   updateChapter(chapterID, data) { return apiClient.patch(`/update-chapter/${chapterID}`, { ...data }) },

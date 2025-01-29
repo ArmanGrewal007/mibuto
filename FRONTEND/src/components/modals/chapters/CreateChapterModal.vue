@@ -13,10 +13,10 @@
             <div class="row g-3">
               <!-- Subject Selection -->
               <div class="form-floating col-md-12">
-                <select  id="subject-select"  v-model="formData.subject_id"  class="form-select"
+                <select id="subject-select" v-model="formData.subject_id" class="form-select"
                   :class="{ 'is-invalid': !formData.subject_id && showValidation }">
                   <option value="">Select a subject</option>
-                  <option  v-for="subject in subjects"  :key="subject.id"  :value="subject.id">
+                  <option v-for="subject in subjects" :key="subject.id" :value="subject.id">
                     {{ subject.name }}
                   </option>
                 </select>
@@ -29,7 +29,7 @@
               <!-- Chapter Name -->
               <div class="form-floating col-md-12">
                 <input id="chapter-name" v-model="formData.name" placeholder="" class="form-control"
-                  :class="{ 'is-invalid': !formData.name && showValidation }"/>
+                  :class="{ 'is-invalid': !formData.name && showValidation }" />
                 <label for="chapter-name" class="form-label">Name <span class="text-danger">*</span></label>
                 <div class="invalid-feedback" v-if="!formData.name && showValidation">
                   Chapter name is required
@@ -38,7 +38,8 @@
 
               <!-- Description -->
               <div class="form-floating col-md-12">
-                <textarea id="description" v-model="formData.description" placeholder="" class="form-control" style="height: 100px"></textarea>
+                <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
+                  style="height: 100px"></textarea>
                 <label for="description" class="form-label">Description</label>
               </div>
             </div>
@@ -97,13 +98,13 @@ export default {
     });
 
     const chapterTypes = [
-      'Introduction to', 'Fundamentals of', 'Advanced', 
+      'Introduction to', 'Fundamentals of', 'Advanced',
       'Basic Concepts in', 'Applications of', 'Principles of'
     ];
 
     const isFormValid = computed(() => {
-      return formData.value.name.trim().length >= 3 && 
-              formData.value.subject_id !== '';
+      return formData.value.name.trim().length >= 3 &&
+        formData.value.subject_id !== '';
     });
 
     const randomizeFields = () => {
@@ -111,19 +112,19 @@ export default {
         const randomSubject = faker.helpers.arrayElement(subjects.value);
         formData.value = {
           subject_id: randomSubject.id,
-          name: faker.helpers.arrayElement(chapterTypes) + ' ' + 
-                faker.science.chemicalElement().name,
+          name: faker.helpers.arrayElement(chapterTypes) + ' ' +
+            faker.science.chemicalElement().name,
           description: `This chapter covers ${faker.science.unit().name} and its ` +
-                      `relationship with ${faker.science.unit().symbol}.`
+            `relationship with ${faker.science.unit().symbol}.`
         };
       }
     };
 
     const clearFields = () => {
-      formData.value = { 
-        name: '', 
-        description: '', 
-        subject_id: '' 
+      formData.value = {
+        name: '',
+        description: '',
+        subject_id: ''
       };
       showValidation.value = false;
     };

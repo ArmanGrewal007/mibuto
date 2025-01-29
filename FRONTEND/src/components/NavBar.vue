@@ -211,7 +211,7 @@ export default {
         const response = await this.$store.dispatch(`${lowerEntity}/${actionType}`, data);
         this[modalRef] = false;
         const message = response?.msg || response?.message || `${entity} ${action} was successful!`;
-        
+
         this.$refs.toastComponent?.addToast("success", message);
       } catch (error) {
         const message = error.response?.data?.msg || error.response?.data?.message || "Something went wrong. Please try again.";
@@ -220,17 +220,17 @@ export default {
     },
 
     // Subject handlers
-    handleCreateSubject(data) { this.handleAction("createSubject", data, "createSubjectModal");},
-    handleUpdateSubject(data) { this.handleAction("updateSubject", data, "updateSubjectModal");},
-    handleDeleteSubject(subjectId) { this.handleAction("deleteSubject", subjectId, "deleteSubjectModal");},
+    handleCreateSubject(data) { this.handleAction("createSubject", data, "createSubjectModal"); },
+    handleUpdateSubject(data) { this.handleAction("updateSubject", data, "updateSubjectModal"); },
+    handleDeleteSubject(subjectId) { this.handleAction("deleteSubject", subjectId, "deleteSubjectModal"); },
     // Chapter handlers
-    handleCreateChapter(data) { this.handleAction("createChapter", data, "createChapterModal");},
-    handleUpdateChapter(data) { this.handleAction("updateChapter", data, "updateChapterModal");},
-    handleDeleteChapter(chapterId) { this.handleAction("deleteChapter", chapterId, "deleteChapterModal");},
+    handleCreateChapter(data) { this.handleAction("createChapter", data, "createChapterModal"); },
+    handleUpdateChapter(data) { this.handleAction("updateChapter", data, "updateChapterModal"); },
+    handleDeleteChapter(chapterId) { this.handleAction("deleteChapter", chapterId, "deleteChapterModal"); },
     // Quiz handlers
-    handleCreateQuiz(data) { this.handleAction("createQuiz", data, "createQuizModal");},
-    handleUpdateQuiz(data) { this.handleAction("updateQuiz", data, "updateQuizModal");},
-    handleDeleteQuiz(quizId) { this.handleAction("deleteQuiz", quizId, "deleteQuizModal");},
+    handleCreateQuiz(data) { this.handleAction("createQuiz", data, "createQuizModal"); },
+    handleUpdateQuiz(data) { this.handleAction("updateQuiz", data, "updateQuizModal"); },
+    handleDeleteQuiz(quizId) { this.handleAction("deleteQuiz", quizId, "deleteQuizModal"); },
   },
 };
 </script>

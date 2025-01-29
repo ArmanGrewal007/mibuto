@@ -38,11 +38,11 @@
           <!-- Warning Message -->
           <div v-if="selectedChapter" class="alert alert-warning" role="alert">
             <p class="mb-1">
-              Are you sure you want to delete the chapter: 
+              Are you sure you want to delete the chapter:
               <strong><u>{{ selectedChapter.name }}</u></strong>?
             </p>
             <p class="mb-1">
-              From subject: 
+              From subject:
               <strong><u>{{ selectedSubject?.name }}</u></strong>
             </p>
             <p class="mb-0">
@@ -79,21 +79,21 @@ export default {
 
     // Get subjects from store
     const subjects = computed(() => store.getters['subjects/getSubjects']);
-    
+
     // Get chapters for selected subject
-    const subjectChapters = computed(() => 
-      selectedSubjectId.value 
+    const subjectChapters = computed(() =>
+      selectedSubjectId.value
         ? store.getters['chapters/getChaptersBySubjectId'](selectedSubjectId.value)
         : []
     );
 
     // Find the selected subject object
-    const selectedSubject = computed(() => 
+    const selectedSubject = computed(() =>
       subjects.value.find(subject => subject.id === selectedSubjectId.value)
     );
 
     // Find the selected chapter object
-    const selectedChapter = computed(() => 
+    const selectedChapter = computed(() =>
       subjectChapters.value.find(chapter => chapter.id === selectedChapterId.value)
     );
 
@@ -105,7 +105,7 @@ export default {
       selectedChapterId.value = '';
       if (selectedSubjectId.value) {
         await store.dispatch(
-          'chapters/fetchChaptersBySubject', 
+          'chapters/fetchChaptersBySubject',
           selectedSubjectId.value
         );
       }

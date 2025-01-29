@@ -43,20 +43,20 @@ export default {
 <style scoped>
 .toast-enter-active,
 .toast-leave-active {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .toast-enter-from {
-    transform: translateX(100%);
-    opacity: 0;
+  transform: translateX(100%);
+  opacity: 0;
 }
 
 .toast-leave-to {
-    transform: translateY(100%);
-    opacity: 0;
+  transform: translateY(100%);
+  opacity: 0;
 }
 
 .toast-move {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 </style>
