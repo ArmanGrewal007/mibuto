@@ -3,7 +3,7 @@ import random
 import requests
 from flask.cli import with_appcontext
 from flask_api.extensions import user_datastore
-from flask_api.models import db
+from flask_api.models import db, Subjects
 from flask_security.utils import hash_password
 from faker import Faker
 from datetime import date, datetime, timedelta
@@ -52,7 +52,7 @@ def create_admin(username, password, full_name, qualification, dob):
         )
         
         db.session.commit()
-        click.echo('Admin created successfully')
+        click.echo('Admin created')
 
     except Exception as e:
         db.session.rollback()
@@ -60,3 +60,42 @@ def create_admin(username, password, full_name, qualification, dob):
 
 ################ Creating dummy data ################
 fake = Faker('en_IN') # Indian locale
+
+################ Creating dummy subjects ################
+@click.command('create-subjects')
+@click.argument('n', type=int)
+@with_appcontext
+def create_subjects(n):
+    try:
+        academic_subjects = [
+            'Mathematics', 'Physics', 'Chemistry',
+            'Biology', 'Computer Science', 'Literature',
+            'History', 'Art', 'Economics'
+        ]        
+        admin_user = user_datastore.find_role('Admin').users.first()
+        if not admin_user:
+            click.echo("Error: No admin user found.")
+            return
+        admin_user_id = admin_user.id
+        subjects = []
+        for _ in range(n):
+            name = f"{fake.random_element(academic_subjects)}-{fake.random_int(min=100, max=400)}"
+            description = (
+                f"Study of {fake.random_element(['atoms', 'molecules', 'structures'])} and "
+                f"{fake.random_element(['forces', 'dynamics', 'systems'])}."
+            )
+            
+            subject = Subjects(
+                name=name,
+                description=description,
+                created_by=admin_user_id
+            )
+            subjects.append(subject)
+
+        db.session.bulk_save_objects(subjects)
+        db.session.commit()
+        click.echo(f"{n} dummy subject(s) created.")
+
+    except Exception as e:
+        db.session.rollback()
+        click.echo(f"Error: {str(e)}")

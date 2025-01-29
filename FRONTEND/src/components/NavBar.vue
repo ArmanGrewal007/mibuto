@@ -144,13 +144,15 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import CreateSubjectModal from "@/components/modals/CreateSubjectModal.vue";
+import CreateSubjectModal from "@/components/modals/subjects/CreateSubjectModal.vue";
+import UpdateSubjectModal from "@/components/modals/subjects/UpdateSubjectModal.vue";
+import DeleteSubjectModal from "@/components/modals/subjects/DeleteSubjectModal.vue";
 import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
   name: "NavBar",
   components: {
-    CreateSubjectModal,
+    CreateSubjectModal, UpdateSubjectModal, DeleteSubjectModal,
     ToastNotification
   },
   data() {
@@ -169,9 +171,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions({
-      clearSession: "user_auth/logout",
-    }),
+    ...mapActions({ clearSession: "user_auth/logout" }),
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
       if (this.isSidebarOpen) {
@@ -201,10 +201,7 @@ export default {
     },
     async handleCreateSubject(data) {
       try {
-        const response = await this.$store.dispatch('shows/createSubject', data);
-        // if (this.$route.name === 'home') {
-        //   this.$store.dispatch('shows/fetchSubjects'); // Refresh shows only on HomePage
-        // }
+        const response = await this.$store.dispatch('subjects/createSubject', data);
         this.createSubjectModal = false;
         const message = response?.msg || response?.message || 'Action was done';
         if (this.$refs.toastComponent) {
@@ -219,7 +216,7 @@ export default {
     },
     async handleUpdateSubject(data) {
       try {
-        const response = await this.$store.dispatch('shows/updateSubject', data);
+        const response = await this.$store.dispatch('subjects/updateSubject', data);
         this.updateSubjectModal = false;
         const message = response?.msg || response?.message || 'Action was done';
         if (this.$refs.toastComponent) {
@@ -234,7 +231,7 @@ export default {
     },
     async handleDeleteSubject(showId) {
       try {
-        const response = await this.$store.dispatch('shows/deleteSubject', showId);
+        const response = await this.$store.dispatch('subjects/deleteSubject', showId);
         this.deleteSubjectModal = false;
         console.log(response);
         const message = response?.msg || response?.message || 'Action was done';
@@ -268,7 +265,7 @@ export default {
         }
       }
     },
-    async handleUpdateChapter(data){
+    async handleUpdateChapter(data) {
       try {
         const response = await this.$store.dispatch('theaters/updateChapter', data);
         console.log("response: ", response);
@@ -284,7 +281,7 @@ export default {
         }
       }
     },
-    async handleDeleteChapter(data){
+    async handleDeleteChapter(data) {
       try {
         const response = await this.$store.dispatch('theaters/deleteChapter', data);
         console.log("response: ", response);
@@ -423,9 +420,10 @@ export default {
 }
 
 .logo {
-  height: 47px; 
+  height: 47px;
   margin-right: 8px;
 }
+
 .nav-link:hover .logo {
   filter: invert(1) brightness(2);
   transition: filter 0.3s ease, opacity 0.3s ease;

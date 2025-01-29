@@ -68,7 +68,7 @@ def process_login(username, password, require_admin=False):
     # Generate a token
     token = None
     if require_admin:
-        token = create_access_token(identity=f"{username}")
+        token = create_access_token(identity=f"{username}-{user.id}")
 
     # Return user data and token
     return jsonify(

@@ -4,9 +4,9 @@ export const user_auth = {
   namespaced: true,
   
   state: {
-    user: null,
-    username: '',
-    isAdmin: false
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    username: localStorage.getItem('username') ? JSON.parse(localStorage.getItem('username')) : '',
+    isAdmin: localStorage.getItem('isAdmin') ? JSON.parse(localStorage.getItem('isAdmin')) : false
   },
 
   mutations: {
@@ -15,6 +15,7 @@ export const user_auth = {
       const loggedInAsAdmin = userData.loggedInAsAdmin || false;
       state.isAdmin = loggedInAsAdmin && userData.user?.roles.includes('Admin');
       
+      localStorage.setItem('user', JSON.stringify(userData.user));
       localStorage.setItem('username', JSON.stringify(userData.user?.username));
       localStorage.setItem('full_name', JSON.stringify(userData.user?.full_name));
       localStorage.setItem('qualification', JSON.stringify(userData.user?.qualification));
@@ -28,6 +29,7 @@ export const user_auth = {
       state.isAdmin = false;
       state.username = '';
       
+      localStorage.removeItem('user');
       localStorage.removeItem('username');
       localStorage.removeItem('full_name');
       localStorage.removeItem('qualification');

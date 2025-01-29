@@ -10,9 +10,8 @@ subject = Blueprint('subject', __name__)
 @jwt_required()
 def create_subject():
     try:
-        # Get current user's ID from JWT token
-        current_user_id = get_jwt_identity()
-        
+        current_username, current_user_id = get_jwt_identity().rsplit("-", 1)
+
         # Get request data
         data = request.get_json()
         
@@ -33,7 +32,7 @@ def create_subject():
         new_subject = Subjects(
             name=data['name'],
             description=data.get('description'),
-            created_by=current_user_id
+            created_by=int(current_user_id)
         )
         
         db.session.add(new_subject)
@@ -107,17 +106,17 @@ def get_subject():
 @jwt_required()
 def update_subject(subject_id):
     try:
-        current_user_id = get_jwt_identity()
-        
+        current_username, current_user_id = get_jwt_identity().rsplit("-", 1)
+      
         # Get subject
-        subject = Subjects.query.get(subject_id)
-        if not subject:
+        _subject = Subjects.query.get(subject_id)
+        if not _subject:
             return jsonify({
                 'message': 'Subject not found'
             }), HTTPStatus.NOT_FOUND
             
         # Check if current user created the subject
-        if subject.created_by != current_user_id:
+        if _subject.created_by != int(current_user_id):
             return jsonify({
                 'message': 'Unauthorized to update this subject'
             }), HTTPStatus.FORBIDDEN
@@ -136,21 +135,21 @@ def update_subject(subject_id):
                 return jsonify({
                     'message': 'Subject with this name already exists'
                 }), HTTPStatus.CONFLICT
-            subject.name = data['name']
+            _subject.name = data['name']
             
         if 'description' in data:
-            subject.description = data['description']
+            _subject.description = data['description']
             
         db.session.commit()
         
         return jsonify({
             'message': 'Subject updated successfully',
             'subject': {
-                'id': subject.id,
-                'name': subject.name,
-                'description': subject.description,
-                'created_by': subject.created_by,
-                'created_at': subject.created_at
+                'id': _subject.id,
+                'name': _subject.name,
+                'description': _subject.description,
+                'created_by': _subject.created_by,
+                'created_at': _subject.created_at
             }
         }), HTTPStatus.OK
         
@@ -166,23 +165,22 @@ def update_subject(subject_id):
 @jwt_required()
 def delete_subject(subject_id):
     try:
-        current_user_id = get_jwt_identity()
-        
+        current_username, current_user_id = get_jwt_identity().rsplit("-", 1)
         # Get subject
-        subject = Subjects.query.get(subject_id)
-        if not subject:
+        _subject = Subjects.query.get(subject_id)
+        if not _subject:
             return jsonify({
                 'message': 'Subject not found'
             }), HTTPStatus.NOT_FOUND
             
         # Check if current user created the subject
-        if subject.created_by != current_user_id:
+        if _subject.created_by != int(current_user_id):
             return jsonify({
                 'message': 'Unauthorized to delete this subject'
             }), HTTPStatus.FORBIDDEN
             
         # Delete subject (will cascade delete related chapters and quizzes)
-        db.session.delete(subject)
+        db.session.delete(_subject)
         db.session.commit()
         
         return jsonify({

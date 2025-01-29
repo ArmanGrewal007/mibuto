@@ -24,4 +24,11 @@ export default {
   postUserSignup(credentials) { return apiClient.post('/user-signup', credentials) },
   postUserLogin(credentials) { return apiClient.post('/user-login', credentials) },
   postAdminLogin(credentials) { return apiClient.post('/admin-login', credentials) },
+  // Subject APIs
+  createSubject(data) { return apiClient.post('/create-subject', data) },
+  getSubjects() { return apiClient.get('/get-subject'); },
+  getSubjectsByID(subjectID) { return apiClient.get(`/get-subject?subject_id=${subjectID}`); },
+  updateSubject(subjectID, data) { return apiClient.patch(`/update-subject/${subjectID}`, { ...data }); },
+  deleteSubject(subjectID) { return apiClient.delete(`/delete-subject/${subjectID}`);},  
+
 }
