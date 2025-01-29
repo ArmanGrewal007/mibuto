@@ -22,9 +22,7 @@
               <div class="form-floating col-md-12">
                 <textarea id="description" v-model="formData.description" placeholder=""
                   class="form-control"></textarea>
-                <label for="description" class="form-label">Description
-                  <span class="text-danger">*</span>
-                </label>
+                <label for="description" class="form-label">Description</label>
               </div>
             </div>
           </form>
@@ -74,8 +72,7 @@ export default {
     ];
 
     const isFormValid = computed(() => {
-      return formData.value.name.trim().length >= 3 &&
-        formData.value.description.trim().length >= 20;
+      return formData.value.name.trim().length >= 3
     });
 
     const randomizeFields = () => {

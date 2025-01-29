@@ -25,7 +25,7 @@ export const subjects = {
       return response.data;
     },
     async fetchSubjectById({ commit }, subjectId) {
-      const response = await EventService.getSubjectsByID(subjectId);
+      const response = await EventService.getSubjectByID(subjectId);
       commit('SET_SELECTED_SUBJECT', response.data.subject);
       return response.data;
     },

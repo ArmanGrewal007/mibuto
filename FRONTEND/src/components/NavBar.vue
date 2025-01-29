@@ -147,12 +147,16 @@ import { mapGetters, mapActions } from "vuex";
 import CreateSubjectModal from "@/components/modals/subjects/CreateSubjectModal.vue";
 import UpdateSubjectModal from "@/components/modals/subjects/UpdateSubjectModal.vue";
 import DeleteSubjectModal from "@/components/modals/subjects/DeleteSubjectModal.vue";
+import CreateChapterModal from "@/components/modals/chapters/CreateChapterModal.vue";
+import UpdateChapterModal from "@/components/modals/chapters/UpdateChapterModal.vue";
+import DeleteChapterModal from "@/components/modals/chapters/DeleteChapterModal.vue";
 import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
   name: "NavBar",
   components: {
     CreateSubjectModal, UpdateSubjectModal, DeleteSubjectModal,
+    CreateChapterModal, UpdateChapterModal, DeleteChapterModal,
     ToastNotification
   },
   data() {
@@ -199,119 +203,34 @@ export default {
       }
       this.toggleSidebar();
     },
-    async handleCreateSubject(data) {
+    async handleAction(actionType, data, modalRef) {
       try {
-        const response = await this.$store.dispatch('subjects/createSubject', data);
-        this.createSubjectModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
+        // Extract the action and entity 
+        const [, action, entity] = actionType.match(/^([a-z]+)([A-Z].*)$/) || ["", ""];
+        const lowerEntity = entity.toLowerCase() + `s`;
+        const response = await this.$store.dispatch(`${lowerEntity}/${actionType}`, data);
+        this[modalRef] = false;
+        const message = response?.msg || response?.message || `${entity} ${action} was successful!`;
+        
+        this.$refs.toastComponent?.addToast("success", message);
       } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
+        const message = error.response?.data?.msg || error.response?.data?.message || "Something went wrong. Please try again.";
+        this.$refs.toastComponent?.addToast("error", message);
       }
     },
-    async handleUpdateSubject(data) {
-      try {
-        const response = await this.$store.dispatch('subjects/updateSubject', data);
-        this.updateSubjectModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    },
-    async handleDeleteSubject(showId) {
-      try {
-        const response = await this.$store.dispatch('subjects/deleteSubject', showId);
-        this.deleteSubjectModal = false;
-        console.log(response);
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    },
-    async handleCreateChapter(data) {
-      try {
-        const response = await this.$store.dispatch('theaters/createChapter', data);
-        // Need to do something else here
-        // if (this.$route.name === 'home') { 
-        //   console(this.selectedCity);
-        //   this.$store.dispatch('theaters/fetchChapters', this.selectedCity); // Refresh theaters only on HomePage
-        // }
-        this.createChapterModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    },
-    async handleUpdateChapter(data) {
-      try {
-        const response = await this.$store.dispatch('theaters/updateChapter', data);
-        console.log("response: ", response);
-        this.updateChapterModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    },
-    async handleDeleteChapter(data) {
-      try {
-        const response = await this.$store.dispatch('theaters/deleteChapter', data);
-        console.log("response: ", response);
-        this.deleteChapterModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    },
-    async handleCreateQuiz(data) {
-      try {
-        const response = await this.$store.dispatch('schedules/createQuiz', data);
-        this.createQuizModal = false;
-        const message = response?.msg || response?.message || 'Action was done';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('success', message);
-        }
-      } catch (error) {
-        const message = error.response?.data?.msg || error.response?.data?.message || 'Something went wrong. Please try again.';
-        if (this.$refs.toastComponent) {
-          this.$refs.toastComponent.addToast('error', message);
-        }
-      }
-    }
+
+    // Subject handlers
+    handleCreateSubject(data) { this.handleAction("createSubject", data, "createSubjectModal");},
+    handleUpdateSubject(data) { this.handleAction("updateSubject", data, "updateSubjectModal");},
+    handleDeleteSubject(subjectId) { this.handleAction("deleteSubject", subjectId, "deleteSubjectModal");},
+    // Chapter handlers
+    handleCreateChapter(data) { this.handleAction("createChapter", data, "createChapterModal");},
+    handleUpdateChapter(data) { this.handleAction("updateChapter", data, "updateChapterModal");},
+    handleDeleteChapter(chapterId) { this.handleAction("deleteChapter", chapterId, "deleteChapterModal");},
+    // Quiz handlers
+    handleCreateQuiz(data) { this.handleAction("createQuiz", data, "createQuizModal");},
+    handleUpdateQuiz(data) { this.handleAction("updateQuiz", data, "updateQuizModal");},
+    handleDeleteQuiz(quizId) { this.handleAction("deleteQuiz", quizId, "deleteQuizModal");},
   },
 };
 </script>

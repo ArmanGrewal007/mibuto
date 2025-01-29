@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_api.models import db, Subjects, Users
+from flask_api.models import db, Subjects
 from http import HTTPStatus
 
 subject = Blueprint('subject', __name__)
@@ -31,7 +31,7 @@ def create_subject():
         # Create new subject
         new_subject = Subjects(
             name=data['name'],
-            description=data.get('description'),
+            description=data.get('description', ''),  # Optional field
             created_by=int(current_user_id)
         )
         

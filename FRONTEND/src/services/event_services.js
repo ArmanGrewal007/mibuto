@@ -27,8 +27,14 @@ export default {
   // Subject APIs
   createSubject(data) { return apiClient.post('/create-subject', data) },
   getSubjects() { return apiClient.get('/get-subject'); },
-  getSubjectsByID(subjectID) { return apiClient.get(`/get-subject?subject_id=${subjectID}`); },
+  getSubjectByID(subjectID) { return apiClient.get(`/get-subject?subject_id=${subjectID}`); },
   updateSubject(subjectID, data) { return apiClient.patch(`/update-subject/${subjectID}`, { ...data }); },
   deleteSubject(subjectID) { return apiClient.delete(`/delete-subject/${subjectID}`);},  
-
+  // Chapter APIs
+  createChapter(data) {  return apiClient.post('/create-chapter', data) },
+  getChapters() {  return apiClient.get('/get-chapter') },
+  getChapterByID(chapterID) { return apiClient.get(`/get-chapter?chapter_id=${chapterID}`) },
+  getChaptersBySubject(subjectID) { return apiClient.get(`/get-chapter?subject_id=${subjectID}`) },
+  updateChapter(chapterID, data) { return apiClient.patch(`/update-chapter/${chapterID}`, { ...data }) },
+  deleteChapter(chapterID) { return apiClient.delete(`/delete-chapter/${chapterID}`) },
 }
