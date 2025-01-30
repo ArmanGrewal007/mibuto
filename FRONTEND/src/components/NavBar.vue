@@ -9,6 +9,8 @@
     <UpdateChapterModal v-if="updateChapterModal" @close="updateChapterModal = false" @update="handleUpdateChapter" />
     <DeleteChapterModal v-if="deleteChapterModal" @close="deleteChapterModal = false" @delete="handleDeleteChapter" />
     <CreateQuizModal v-if="createQuizModal" @close="createQuizModal = false" @submit="handleCreateQuiz" />
+    <UpdateQuizModal v-if="updateQuizModal" @close="updateQuizModal = false" @update="handleUpdateQuiz" />
+    <DeleteQuizModal v-if="deleteQuizModal" @close="deleteQuizModal = false" @delete="handleDeleteQuiz" />
 
     <!-- Toast Notifications -->
     <ToastNotification ref="toastComponent" />
@@ -85,10 +87,10 @@
                   <a href="#" class="sidebar-item" @click.prevent="openModal('createQuiz')">
                     <i class="fas fa-plus-circle"></i> Create Quiz
                   </a>
-                  <a href="#" class="sidebar-item disabled" @click.prevent>
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('updateQuiz')">
                     <i class="fas fa-edit"></i> Update Quiz
                   </a>
-                  <a href="#" class="sidebar-item disabled" @click.prevent>
+                  <a href="#" class="sidebar-item" @click.prevent="openModal('deleteQuiz')">
                     <i class="fas fa-trash"></i> Delete Quiz
                   </a>
                 </div>
@@ -150,6 +152,9 @@ import DeleteSubjectModal from "@/components/modals/subjects/DeleteSubjectModal.
 import CreateChapterModal from "@/components/modals/chapters/CreateChapterModal.vue";
 import UpdateChapterModal from "@/components/modals/chapters/UpdateChapterModal.vue";
 import DeleteChapterModal from "@/components/modals/chapters/DeleteChapterModal.vue";
+import CreateQuizModal from "@/components/modals/quizzes/CreateQuizModal.vue";
+import UpdateQuizModal from "@/components/modals/quizzes/UpdateQuizModal.vue";
+import DeleteQuizModal from "@/components/modals/quizzes/DeleteQuizModal.vue";
 import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
@@ -157,6 +162,7 @@ export default {
   components: {
     CreateSubjectModal, UpdateSubjectModal, DeleteSubjectModal,
     CreateChapterModal, UpdateChapterModal, DeleteChapterModal,
+    CreateQuizModal, UpdateQuizModal, DeleteQuizModal,
     ToastNotification
   },
   data() {
@@ -164,7 +170,7 @@ export default {
       isSidebarOpen: false,
       showSubjectManagement: false, createSubjectModal: false, updateSubjectModal: false, deleteSubjectModal: false,
       showChapterManagement: false, createChapterModal: false, updateChapterModal: false, deleteChapterModal: false,
-      showQuizManagement: false, createQuizModal: false,
+      showQuizManagement: false, createQuizModal: false, updateQuizModal: false, deleteQuizModal: false,
     };
   },
   computed: {
@@ -187,10 +193,7 @@ export default {
     toggleSubjectManagement() { this.showSubjectManagement = !this.showSubjectManagement; },
     toggleChapterManagement() { this.showChapterManagement = !this.showChapterManagement; },
     toggleQuizManagement() { this.showQuizManagement = !this.showQuizManagement; },
-    logout() {
-      this.clearSession();
-      this.toggleSidebar();
-    },
+    logout() { this.clearSession(); this.toggleSidebar(); },
     openModal(type) {
       switch (type) {
         case 'createSubject': this.createSubjectModal = true; break;
@@ -200,6 +203,8 @@ export default {
         case 'updateChapter': this.updateChapterModal = true; break;
         case 'deleteChapter': this.deleteChapterModal = true; break;
         case 'createQuiz': this.createQuizModal = true; break;
+        case 'updateQuiz': this.updateQuizModal = true; break;
+        case 'deleteQuiz': this.deleteQuizModal = true; break;
       }
       this.toggleSidebar();
     },
@@ -207,11 +212,11 @@ export default {
       try {
         // Extract the action and entity 
         const [, action, entity] = actionType.match(/^([a-z]+)([A-Z].*)$/) || ["", ""];
-        const lowerEntity = entity.toLowerCase() + `s`;
+        let lowerEntity = entity.toLowerCase() + `s`;
+        if (lowerEntity === "quizs") lowerEntity = "quizzes";
         const response = await this.$store.dispatch(`${lowerEntity}/${actionType}`, data);
         this[modalRef] = false;
         const message = response?.msg || response?.message || `${entity} ${action} was successful!`;
-
         this.$refs.toastComponent?.addToast("success", message);
       } catch (error) {
         const message = error.response?.data?.msg || error.response?.data?.message || "Something went wrong. Please try again.";

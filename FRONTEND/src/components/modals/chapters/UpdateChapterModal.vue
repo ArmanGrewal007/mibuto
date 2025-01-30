@@ -44,8 +44,7 @@
                 <input id="chapter-name" v-model="formData.name" placeholder="" class="form-control"
                   :disabled="!selectedChapterId" />
                 <label for="chapter-name" class="form-label">
-                  Name
-                  <span class="text-danger">*</span>
+                  New Name<span class="text-danger">*</span>
                 </label>
               </div>
 
@@ -54,8 +53,7 @@
                 <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
                   :disabled="!selectedChapterId" minlength="10"></textarea>
                 <label for="description" class="form-label">
-                  Description
-                  <span class="text-danger">*</span>
+                  New Description<span class="text-danger">*</span>
                 </label>
               </div>
             </div>
@@ -137,19 +135,13 @@ export default {
 
       if (selectedSubjectId.value) {
         // Load chapters for selected subject
-        await store.dispatch(
-          'chapters/fetchChaptersBySubject',
-          selectedSubjectId.value
-        );
+        await store.dispatch('chapters/fetchChaptersBySubject', selectedSubjectId.value);
       }
     };
 
     const handleChapterSelect = async () => {
       if (selectedChapterId.value) {
-        const response = await store.dispatch(
-          'chapters/fetchChapterById',
-          selectedChapterId.value
-        );
+        const response = await store.dispatch('chapters/fetchChapterById', selectedChapterId.value);
         originalData.value = { ...response.data };
         formData.value = { ...response.data };
       } else {
@@ -161,17 +153,14 @@ export default {
     const randomizeFields = () => {
       formData.value = {
         ...formData.value,
-        name: faker.helpers.arrayElement(chapterTypes) + ' ' +
-          faker.science.chemicalElement().name,
+        name: faker.helpers.arrayElement(chapterTypes) + ' ' + faker.science.chemicalElement().name,
         description: `This chapter covers ${faker.science.unit().name} and its ` +
           `relationship with ${faker.science.unit().symbol}.`
       };
     };
 
     const resetToOriginal = () => {
-      if (originalData.value) {
-        formData.value = { ...originalData.value };
-      }
+      if (originalData.value) { formData.value = { ...originalData.value }; }
     };
 
     const handleSubmit = () => {

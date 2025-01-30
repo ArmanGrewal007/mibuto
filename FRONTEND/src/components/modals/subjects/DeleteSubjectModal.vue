@@ -21,8 +21,10 @@
 
           <div v-if="selectedSubjectId" class="alert alert-warning" role="alert">
             Are you sure you want to delete the subject: <strong><u>{{ selectedSubject?.name }}</u></strong>?<br>
-            This action is irreversible and will delete all associated chapters, and any quizzes contained within those
-            chapters.
+            <p class="mb-0 text-danger">
+              This action is irreversible and will delete all associated chapters, and any quizzes contained within
+              those chapters.
+            </p>
           </div>
         </div>
 

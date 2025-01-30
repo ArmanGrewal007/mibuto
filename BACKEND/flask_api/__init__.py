@@ -48,9 +48,11 @@ def create_app():
     
     app.register_blueprint(main)
     # Register CLI command
-    from .commands import create_admin, create_subjects
+    from .commands import create_admin, create_subjects, create_chapters, create_quizzes
     app.cli.add_command(create_admin)
     app.cli.add_command(create_subjects)
+    app.cli.add_command(create_chapters)
+    app.cli.add_command(create_quizzes)
     return app
 
 if __name__ == '__main__':

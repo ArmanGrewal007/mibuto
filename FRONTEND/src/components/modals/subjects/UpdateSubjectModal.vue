@@ -29,8 +29,8 @@
               <div class="form-floating col-md-12">
                 <input id="subject-name" v-model="formData.name" placeholder="" class="form-control"
                   :disabled="!selectedSubjectId" pattern="^.+-\d+$" />
-                <label for="subject-name" class="form-label">Name (format: text-number)
-                  <span class="text-danger">*</span>
+                <label for="subject-name" class="form-label">
+                  New Name (format: text-number)<span class="text-danger">*</span>
                 </label>
               </div>
 
@@ -38,8 +38,8 @@
               <div class="form-floating col-md-12">
                 <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
                   :disabled="!selectedSubjectId" minlength="10"></textarea>
-                <label for="description" class="form-label">Description
-                  <span class="text-danger">*</span>
+                <label for="description" class="form-label">
+                  New Description<span class="text-danger">*</span>
                 </label>
               </div>
             </div>

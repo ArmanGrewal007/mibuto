@@ -3,11 +3,12 @@ from .user_routes import user
 from .admin_routes import admin
 from .subject_routes import subject
 from .chapter_routes import chapter
+from .quiz_routes import quiz
 
 main = Blueprint('main', __name__)
 
 # Register individual blueprints
-blueprints = [user, admin, subject, chapter]
+blueprints = [user, admin, subject, chapter, quiz]
 
 for blueprint in blueprints:
     main.register_blueprint(blueprint)

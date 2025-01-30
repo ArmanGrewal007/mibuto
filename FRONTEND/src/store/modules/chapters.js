@@ -67,10 +67,7 @@ export const chapters = {
     },
     async fetchChaptersBySubject({ commit }, subjectId) {
       const response = await EventService.getChaptersBySubject(subjectId);
-      commit('SET_CHAPTERS_BY_SUBJECT', {
-        subjectId,
-        chapters: response.data.data
-      });
+      commit('SET_CHAPTERS_BY_SUBJECT', {subjectId, chapters: response.data.data});
       return response.data;
     },
     async createChapter({ commit }, chapterData) {

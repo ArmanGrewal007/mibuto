@@ -37,4 +37,11 @@ export default {
   getChaptersBySubject(subjectID) { return apiClient.get(`/get-chapter?subject_id=${subjectID}`) },
   updateChapter(chapterID, data) { return apiClient.patch(`/update-chapter/${chapterID}`, { ...data }) },
   deleteChapter(chapterID) { return apiClient.delete(`/delete-chapter/${chapterID}`) },
+  // Quiz APIs
+  createQuiz(data) { return apiClient.post('/create-quiz', data) },
+  getQuizzes() { return apiClient.get('/get-quiz') },
+  getQuizByID(quizID) { return apiClient.get(`/get-quiz?id=${quizID}`) },
+  getQuizzesByChapter(chapterID) { return apiClient.get(`/get-quiz?chapter_id=${chapterID}`) },
+  updateQuiz(data) { return apiClient.patch('/update-quiz', data) },
+  deleteQuiz(quizID) { return apiClient.delete(`/delete-quiz?id=${quizID}`) }
 }
