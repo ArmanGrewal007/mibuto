@@ -52,9 +52,7 @@
               <div class="form-floating col-md-12">
                 <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
                   :disabled="!selectedChapterId" minlength="10"></textarea>
-                <label for="description" class="form-label">
-                  New Description<span class="text-danger">*</span>
-                </label>
+                <label for="description" class="form-label">New Description</label>
               </div>
             </div>
           </form>
@@ -114,8 +112,7 @@ export default {
     );
 
     const isFormValid = computed(() => {
-      return formData.value.name.trim().length >= 3 &&
-        formData.value.description.trim().length >= 5;
+      return formData.value.name.trim().length >= 3
     });
 
     const chapterTypes = [
@@ -143,6 +140,7 @@ export default {
       if (selectedChapterId.value) {
         const response = await store.dispatch('chapters/fetchChapterById', selectedChapterId.value);
         originalData.value = { ...response.data };
+        console.log(response.data);
         formData.value = { ...response.data };
       } else {
         formData.value = { name: '', description: '', subject_id: '' };

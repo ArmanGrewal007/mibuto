@@ -84,9 +84,7 @@
               <div class="form-floating col-md-12">
                 <textarea id="remarks" v-model="formData.remarks" placeholder="" class="form-control"
                   :disabled="!selectedQuizId" minlength="5"></textarea>
-                <label for="remarks" class="form-label">
-                  New Remarks<span class="text-danger">*</span>
-                </label>
+                <label for="remarks" class="form-label">New Remarks</label>
               </div>
             </div>
           </form>
@@ -157,9 +155,7 @@ export default {
 
     const isFormValid = computed(() => {
       return formData?.value?.title?.trim()?.length >= 3 &&
-        formData?.value?.time_duration > 0 &&
-        formData?.value?.date_of_quiz &&
-        formData?.value?.remarks?.trim()?.length >= 5;
+        formData?.value?.time_duration > 0 && formData?.value?.date_of_quiz
     });
 
     const quizTitles = [
@@ -197,7 +193,9 @@ export default {
       if (selectedQuizId.value) {
         const response = await store.dispatch('quizzes/fetchQuizById', selectedQuizId.value);
         originalData.value = { ...response.data };
-        formData.value = { ...response.data };
+        formData.value = { 
+          ...response.data, 
+          date_of_quiz: new Date(response.data.date_of_quiz).toISOString().slice(0, 16) };
       } else {
         formData.value = { title: '', time_duration: '', date_of_quiz: '', remarks: '', chapter_id: '' };
         originalData.value = null;

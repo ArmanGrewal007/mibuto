@@ -40,7 +40,7 @@ def create_subject():
         
         return jsonify({
             'message': 'Subject created successfully',
-            'subject': {
+            'data': {
                 'id': new_subject.id,
                 'name': new_subject.name,
                 'description': new_subject.description,
@@ -60,7 +60,7 @@ def create_subject():
 @subject.route('/get-subject', methods=['GET'])
 def get_subject():
     try:
-        subject_id = request.args.get('id')
+        subject_id = request.args.get('subject_id')
         
         if subject_id:
             # Get specific subject
@@ -71,7 +71,7 @@ def get_subject():
                 }), HTTPStatus.NOT_FOUND
                 
             return jsonify({
-                'subject': {
+                'data': {
                     'id': subject.id,
                     'name': subject.name,
                     'description': subject.description,
@@ -144,7 +144,7 @@ def update_subject(subject_id):
         
         return jsonify({
             'message': 'Subject updated successfully',
-            'subject': {
+            'data': {
                 'id': _subject.id,
                 'name': _subject.name,
                 'description': _subject.description,

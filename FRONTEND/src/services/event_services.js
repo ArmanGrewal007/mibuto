@@ -40,7 +40,7 @@ export default {
   // Quiz APIs
   createQuiz(data) { return apiClient.post('/create-quiz', data) },
   getQuizzes() { return apiClient.get('/get-quiz') },
-  getQuizByID(quizID) { return apiClient.get(`/get-quiz?id=${quizID}`) },
+  getQuizByID(quizID) { return apiClient.get(`/get-quiz?quiz_id=${quizID}`) },
   getQuizzesByChapter(chapterID) { return apiClient.get(`/get-quiz?chapter_id=${chapterID}`) },
   updateQuiz(data) { return apiClient.patch('/update-quiz', data) },
   deleteQuiz(quizID) { return apiClient.delete(`/delete-quiz?id=${quizID}`) }

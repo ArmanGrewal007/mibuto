@@ -26,7 +26,7 @@ export const subjects = {
     },
     async fetchSubjectById({ commit }, subjectId) {
       const response = await EventService.getSubjectByID(subjectId);
-      commit('SET_SELECTED_SUBJECT', response.data.subject);
+      commit('SET_SELECTED_SUBJECT', response.data.data);
       return response.data;
     },
     async createSubject({ commit }, subjectData) {
@@ -38,7 +38,7 @@ export const subjects = {
     async updateSubject({ commit }, { subjectId, updatedData }) {
       EventService.addtoken();
       const response = await EventService.updateSubject(subjectId, updatedData);
-      commit('UPDATE_SUBJECT', response.data.subject);
+      commit('UPDATE_SUBJECT', response.data.data);
       return response.data;
     },
     async deleteSubject({ commit }, subjectId) {

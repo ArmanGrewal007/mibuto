@@ -14,8 +14,8 @@
               <!-- Subject Name -->
               <div class="form-floating col-md-12">
                 <input id="subject-name" v-model="formData.name" placeholder="" class="form-control" />
-                <label for="subject-name" class="form-label">Name
-                  <span class="text-danger">*</span>
+                <label for="subject-name" class="form-label">
+                  Name (format: text-number)<span class="text-danger">*</span>
                 </label>
               </div>
               <!-- Description -->

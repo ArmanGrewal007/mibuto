@@ -48,7 +48,7 @@ def create_quiz():
 @quiz.route('/get-quiz', methods=['GET'])
 def get_quiz():
     try:
-        quiz_id = request.args.get('id')
+        quiz_id = request.args.get('quiz_id')
         
         if quiz_id:
             # Get specific quiz

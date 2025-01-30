@@ -38,9 +38,7 @@
               <div class="form-floating col-md-12">
                 <textarea id="description" v-model="formData.description" placeholder="" class="form-control"
                   :disabled="!selectedSubjectId" minlength="10"></textarea>
-                <label for="description" class="form-label">
-                  New Description<span class="text-danger">*</span>
-                </label>
+                <label for="description" class="form-label">New Description</label>
               </div>
             </div>
           </form>
@@ -90,8 +88,7 @@ export default {
     const subjects = computed(() => store.getters['subjects/getSubjects']);
 
     const isFormValid = computed(() => {
-      return formData?.value?.name?.trim().length >= 3 &&
-        formData?.value?.description?.trim().length >= 5;
+      return formData?.value?.name?.trim().length >= 3
     });
 
     const academicSubjects = [
@@ -106,12 +103,10 @@ export default {
 
     const handleSubjectSelect = async () => {
       if (selectedSubjectId.value) {
-        const subject = await store.dispatch(
-          'subjects/fetchSubjectById',
-          selectedSubjectId.value
-        );
-        originalData.value = { ...subject.subject };
-        formData.value = { ...subject.subject };
+        const response = await store.dispatch('subjects/fetchSubjectById', selectedSubjectId.value);
+        originalData.value = { ...response.data };
+        console.log(response.data);
+        formData.value = { ...response.data };
       } else {
         formData.value = { name: '', description: '' };
         originalData.value = null;
